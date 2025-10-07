@@ -1,0 +1,20 @@
+from pathlib import Path
+import json
+import textwrap
+
+BASE_URL = "https://love-astrologer.com/"
+OG_IMAGE = "https://love-astrologer.com/assets/img/9.jpg"
+OUTPUT_DIR = Path('.')
+
+def resolve_url(url: str, asset_prefix: str) -> str:
+    if url.startswith(("http://", "https://", "tel:", "mailto:")):
+        return url
+    if url.startswith('#'):
+        base = 'index.html' if asset_prefix else ''
+        return f"{asset_prefix}{base}{url}" if asset_prefix else url
+    if asset_prefix and not url.startswith('../'):
+        return f"{asset_prefix}{url}"
+    return url
+
+NAV_LINKS = [
+    {"label": "Home", "href": "index.html", "key": "home"},
